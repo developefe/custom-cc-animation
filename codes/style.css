@@ -1,0 +1,256 @@
+* { padding: 0; margin: 0; }
+body { background: radial-gradient(#fff7f7 20%, #c7c7c7 88%, #000 180%); width: 100%; height: 100vh; overflow: hidden; font-family: 'BunkenTechSansPro', sans-serif; font-weight: 300; }
+
+@font-face { font-family: "BunkenTechSansPro"; font-style: normal; font-weight: 300; src: local("BunkenTechSansPro"), url("assets/BunkenTechSansPro-Light.woff2") format("woff2"); }
+@font-face { font-family: "BunkenTechSansPro"; font-style: normal; font-weight: 500; src: local("BunkenTechSansPro"), url("assets/BunkenTechSansPro-Med.woff2") format("woff2"); }
+@font-face { font-family: "CreditCard"; font-style: normal; font-weight: 400; src: local("CreditCard"), url("assets/font.ttf") format("ttf"); }
+
+.scene {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+    perspective-origin: center;
+    position: relative;
+}
+
+.scene .card {
+    width: 660px;
+    background: #ffffff00;
+    height: 400px;
+    border-radius: 35px;
+    border: 5px solid white;
+    box-shadow: 0 0 50px -12px #00000026;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg) translateY(0px);
+    transition: .8s;
+    transition-timing-function: cubic-bezier(0.08, 0.63, 0.25, 1.01);
+}
+
+/* For animation */
+
+.scene .card.start {
+    transition: 1.5s;
+    transition-timing-function: cubic-bezier(0.21, 0.65, 0.22, 1.35);
+}
+
+.scene .card.start-2 {
+    transform: rotateY(360deg) translateY(100vh);
+}
+
+.scene .card.exit {
+    transition: 1.5s;
+    transition-timing-function: cubic-bezier(0.45, -0.65, 0.34, 0.99);
+    transform: rotateY(360deg) translateY(-100vh);
+}
+
+/* ---- */
+
+.scene .card.turn {
+    transform: rotateY(180deg);
+}
+
+.scene .card .card-face {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff7f7;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 30px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.scene .card .card-face .payment-firm {
+    position: absolute;
+    right: 23px;
+    top: 11px;
+}
+
+.scene .card .card-face .payment-firm img {
+    width: 75px;
+}
+
+.scene .card .card-face .cc-number {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 35px;
+    font-size: 35px;
+    font-weight: 500;
+    color: #fff;
+    text-shadow: 1px 2px 6px #0000004a;
+    letter-spacing: 5px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.scene .card .card-face.front .card-holder, .scene .card .card-face.front .expiry-date {
+    position: absolute;
+    bottom: 30px;
+    left: 35px;
+    max-width: 50%;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.scene .card .card-face.front .card-holder span, .scene .card .card-face.front .expiry-date span {
+    font-size: 10px;
+    color: #c3bebe;
+}
+
+.scene .card .card-face.front .card-holder p, .scene .card .card-face.front .expiry-date p {
+    text-transform: uppercase;
+    font-size: 24px;
+    min-width: 75px;
+}
+
+.scene .card .card-face.front .expiry-date {
+    left: unset;
+    right: 35px;
+}
+
+.scene .card .card-face.front .chip {
+    position: absolute;
+    width: 55px;
+    top: 75px;
+    left: 35px;
+    /* mix-blend-mode: luminosity; kinda looks cool but didnt use it :p */
+}
+
+.scene .card .card-face.back {
+    transform: rotateY(180deg);
+}
+
+.scene .card .card-face:before, .scene .card .card-face:after {
+    content: "";
+    position: absolute;
+    right: -210px;
+    top: -225px;
+    width: 450px;
+    height: 450px;
+    background: #ed9625;
+    border-radius: 315px;
+    filter: blur(71px);
+    opacity: .4;
+    z-index: 0;
+}
+
+.scene .card .card-face:after {
+    left: -210px;
+    top: 175px;
+    background: #e92525;
+}
+
+.scene .card .card-face.front .card-holder span {
+    color: #ffffffa3;
+}
+
+.scene .card .card-face.back:before {
+    right: unset;
+    left: -205px;
+}
+
+.scene .card .card-face.back:after {
+    top: 175px;
+    right: -210px;
+    left: unset;
+}
+
+.scene .card .card-face.back .payment-firm {
+    top: unset;
+    bottom: 11px;
+}
+
+.scene .card .card-face .ccv {
+    position: absolute;
+    top: 140px;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    height: 45px;
+    align-items: center;
+    justify-content: end;
+    background: #ffffff75;
+    border-radius: 8px;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+    border: 2px solid #ffffff73;
+    box-shadow: 0 0 40px -23px black;
+    cursor: pointer;
+}
+
+.scene .card .card-face .ccv span {
+    font-size: 11px;
+    color: gray;
+    margin-right: 15px;
+}
+
+.scene .card .card-face .ccv p {
+    margin-right: 15px;
+    font-size: 23px;
+    width: 50px;
+}
+.scene .card .card-face .tape {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50px;
+    height: 50px;
+    background: #ffffffa3;
+    box-shadow: 0 0 40px -24px black;
+}
+.scene .datas {
+    position: absolute;
+    opacity: 0;
+    top: -100;
+}
+
+.scene .card .card-face.active {
+    pointer-events: all;
+}
+.scene .card .card-face .clickable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+.scene .info {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #00000042;
+    z-index: -1;
+}
+
+.scene .submit {
+    position: absolute;
+    right: 15%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #000;
+    padding: 15px 45px;
+    border-radius: 12px;
+    font-size: 23px;
+    transition: .4s;
+    cursor: pointer;
+    box-shadow: 0 0 30px -8px #00800000;
+}
+
+.scene .submit:hover {
+    background: green;
+    color: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 30px -4px #008000;
+}
